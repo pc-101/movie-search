@@ -11,7 +11,7 @@ export default async function SearchPage({ searchParams }: Props) {
     return <p className="text-sm text-slate-500">Type a title in the search bar to begin.</p>;
   }
   try {
-    const data = await TMDB.search(q);
+    const data = await TMDB.search(q) as { results: Movie[] };
     if (!data.results.length) {
       return <p className="text-sm text-slate-500">No results for “{q}”.</p>;
     }

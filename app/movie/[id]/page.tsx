@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { TMDB, imageUrl } from "@/lib/tmdb";
+import type { Movie } from "@/lib/types";
 
 type Props = { params: { id: string } };
 
 export default async function MovieDetail({ params }: Props) {
-  const movie = await TMDB.movie(params.id);
+  const movie = await TMDB.movie(params.id) as Movie;
   return (
     <article className="grid gap-6 md:grid-cols-[200px,1fr]">
       <div className="overflow-hidden rounded-xl border dark:border-slate-800">

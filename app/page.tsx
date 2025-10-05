@@ -8,7 +8,7 @@ export const revalidate = 600;
 export default async function Home() {
   let data: Paged<Movie>;
   try {
-    data = await TMDB.trending();
+    data = await TMDB.trending() as Paged<Movie>;
   } catch (e) {
     // Show a minimal offline/empty state if no API key yet
     return (
