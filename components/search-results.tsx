@@ -94,7 +94,7 @@ export default function SearchResults({ query, initial }: Props) {
       {isFetching && <p className="text-sm text-slate-500">Loading more results…</p>}
       {error && <p className="text-sm text-red-500">{error}</p>}
       {!hasMore && !isFetching && (
-        <p className="text-sm text-slate-500">You&apos;ve reached the end of the results.</p>
+        <p className="text-sm text-slate-500">You've reached the end of the results.</p>
       )}
     </div>
   );
