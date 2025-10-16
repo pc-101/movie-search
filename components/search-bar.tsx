@@ -1,17 +1,31 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function SearchBar({ placeholder = "Search movies…" }: { placeholder?: string }) {
   const router = useRouter();
   const params = useSearchParams();
   const [q, setQ] = useState(params.get("q") ?? "");
+  const searchParam = params.get("q") ?? "";
 
-  useEffect(() => setQ(params.get("q") ?? ""), [params]);
+  useEffect(() => setQ(searchParam), [searchParam]);
+
+  const navigate = useCallback((value: string) => {
+    router.push(value ? `/search?q=${encodeURIComponent(value)}` : "/");
+  }, [router]);
+
+  useEffect(() => {
+    if (q === searchParam) {
+      return;
+    }
+
+    const timeoutId = setTimeout(() => navigate(q), 400);
+    return () => clearTimeout(timeoutId);
+  }, [navigate, q, searchParam]);
 
   return (
     <form role="search" className="relative w-full max-w-md"
-      onSubmit={(e) => { e.preventDefault(); router.push(q ? `/search?q=${encodeURIComponent(q)}` : "/"); }}>
+      onSubmit={(e) => { e.preventDefault(); navigate(q); }}>
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
